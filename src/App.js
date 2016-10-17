@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import './App.css';
 import { changeLocation, setTotal, fetchData } from './actions';
 
-class App extends Component {
+export class App extends Component {
   shouldComponentUpdate = (nextProps) => {
     return !this.props.redux.equals(nextProps.redux);
   };
@@ -33,7 +33,7 @@ class App extends Component {
         <div className="App-header">
           <h1>College</h1>
           <form onSubmit={this.fetchData} >
-            <label>I want to know how many colleges in 
+            <label>I want to know how many colleges there are in the state of 
               <input
                 placeholder={"State, i.e. NY"}
                 type="text"

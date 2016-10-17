@@ -4320,6 +4320,10 @@ react-scripts@0.6.1:
   optionalDependencies:
     fsevents "1.0.14"
 
+react-test-renderer:
+  version "15.3.2"
+  resolved "https://registry.yarnpkg.com/react-test-renderer/-/react-test-renderer-15.3.2.tgz#d8f083d37d2d41e97bbdc26a1dd9282f0baf7857"
+
 react@^15.3.2:
   version "15.3.2"
   resolved "https://registry.yarnpkg.com/react/-/react-15.3.2.tgz#a7bccd2fee8af126b0317e222c28d1d54528d09e"

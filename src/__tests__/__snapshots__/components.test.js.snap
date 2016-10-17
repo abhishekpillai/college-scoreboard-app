@@ -1,0 +1,26 @@
+exports[`components <App /> renders correctly 1`] = `
+<div
+  className="App">
+  <div
+    className="App-header">
+    <h1>
+      College
+    </h1>
+    <form
+      onSubmit={[Function anonymous]}>
+      <label>
+        I want to know how many colleges there are in the state of
+        <input
+          onChange={[Function anonymous]}
+          placeholder="State, i.e. NY"
+          type="text"
+          value={undefined} />
+      </label>
+    </form>
+  </div>
+  <h2>
+    There are 
+     colleges in 
+  </h2>
+</div>
+`;
