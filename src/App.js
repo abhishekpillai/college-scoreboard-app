@@ -5,10 +5,14 @@ import './App.css';
 import { changeLocation, setTotal, fetchData } from './actions';
 
 class App extends Component {
+  shouldComponentUpdate = (nextProps) => {
+    return !this.props.redux.equals(nextProps.redux);
+  };
+
   fetchData = (event) => {
     event.preventDefault();
     const requestUrl = 'https://api.data.gov/ed/collegescorecard/v1/schools?_fields=school.name&school.state='
-      + this.props.location
+      + this.props.redux.get('location')
       + '&api_key=SKWPjr6q5hqkNFad7WjeRPdtq61NOH8BUs12NQ6a';
     this.props.dispatch(fetchData(requestUrl));
   };
@@ -20,8 +24,9 @@ class App extends Component {
 
   // Data gov API KEY -> SKWPjr6q5hqkNFad7WjeRPdtq61NOH8BUs12NQ6a
   render() {
-    let answer = this.props.total === 0 ? null :
-      (<h2>There are {this.props.total} colleges in {this.props.location}</h2>);
+    console.log('rendering');
+    let answer = this.props.redux.get('total') === 0 ? null :
+      (<h2>There are {this.props.redux.get('total')} colleges in {this.props.redux.get('location')}</h2>);
 
     return (
       <div className="App">
@@ -44,9 +49,10 @@ class App extends Component {
 }
 
 function mapStateToProps(state) {
+  // redux needs this to be a regular JS object
+  // and not a ImmutableJS obj
   return {
-    location: state.location,
-    total: state.total
+    redux: state
   };
 }
 

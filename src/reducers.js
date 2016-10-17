@@ -1,18 +1,16 @@
-var initialState = {
+import { fromJS } from 'immutable';
+
+var initialState = fromJS({
   location: '',
   total: 0
-};
+});
 
 export default function mainReducer(state = initialState, action) {
   switch (action.type) {
     case 'CHANGE_LOCATION':
-      return Object.assign({}, state, {
-        location: action.location
-      });
+      return state.set('location', action.location);
     case 'SET_TOTAL':
-      return Object.assign({}, state, {
-        total: action.total
-      });
+      return state.set('total', action.total);
     default:
       return state;
   }
