@@ -14,10 +14,20 @@ export function setTotal(total) {
   };
 }
 
+export function setSchools(schools) {
+  return {
+    type: 'SET_SCHOOLS',
+    schools: schools
+  };
+}
+
+
 export function fetchData(requestUrl) {
   return function thunk(dispatch) {
     xhr({ url:  requestUrl }, (err, resp, body) => {
-      dispatch(setTotal(JSON.parse(body).metadata.total));
+      const parsed = JSON.parse(body);
+      dispatch(setTotal(parsed.metadata.total));
+      dispatch(setSchools(parsed.results));
     })
   }
 }

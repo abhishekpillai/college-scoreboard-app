@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Table, Column, Cell } from 'fixed-data-table';
 
 import './App.css';
 import { changeLocation, setTotal, fetchData } from './actions';
@@ -22,11 +23,36 @@ export class App extends Component {
     this.props.dispatch(setTotal(0));
   };
 
-  // Data gov API KEY -> SKWPjr6q5hqkNFad7WjeRPdtq61NOH8BUs12NQ6a
   render() {
-    console.log('rendering');
-    let answer = this.props.redux.get('total') === 0 ? null :
-      (<h2>There are {this.props.redux.get('total')} colleges in {this.props.redux.get('location')}</h2>);
+    let totalSchoolCount = this.props.redux.get('total'),
+      location = this.props.redux.get('location'),
+      schools = this.props.redux.get('schools')
+      ;
+
+    let answer = totalSchoolCount === 0 ? null :
+      (<h2>There are {totalSchoolCount} colleges in {location}</h2>);
+
+    let table = schools.size === 0 ? null :
+      (
+        <Table
+          rowsCount={schools.size}
+          rowHeight={50}
+          headerHeight={50}
+          width={1000}
+          height={500}>
+          <Column
+            header={<Cell>Name</Cell>}
+            cell={props => (
+              <Cell {...props}>
+                {
+                  schools.get(props.rowIndex).get('school.name')
+                }
+              </Cell>
+            )}
+            width={200}
+          />
+        </Table>
+      )
 
     return (
       <div className="App">
@@ -35,14 +61,15 @@ export class App extends Component {
           <form onSubmit={this.fetchData} >
             <label>I want to know how many colleges there are in the state of 
               <input
-                placeholder={"State, i.e. NY"}
+                placeholder="State, i.e. NY"
                 type="text"
-                value={this.props.location}
+                value={location}
                 onChange={this.changeLocation} />
             </label>
           </form>
         </div>
         {answer}
+        {table}
       </div>
     );
   }
