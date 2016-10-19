@@ -26,7 +26,7 @@ export class App extends Component {
   render() {
     let totalSchoolCount = this.props.redux.get('total'),
       location = this.props.redux.get('location'),
-      schools = this.props.redux.get('schools')
+      schools = this.props.redux.get('schools') || { size: 0 }
       ;
 
     let answer = totalSchoolCount === 0 ? null :

@@ -5,7 +5,8 @@ describe('mainReducer', function() {
   it('should return the initial state', function() {
     expect(mainReducer(undefined, {})).toEqual(fromJS({
       location: '',
-      total: 0
+      total: 0,
+      schools: []
     }));
   });
 
@@ -16,7 +17,8 @@ describe('mainReducer', function() {
       location: location
     })).toEqual(fromJS({
       location: location,
-      total: 0
+      total: 0,
+      schools: []
     }));
   });
 
@@ -27,7 +29,8 @@ describe('mainReducer', function() {
       total: total
     })).toEqual(fromJS({
       location: '',
-      total: total
+      total: total,
+      schools: []
     }));
   });
 });
