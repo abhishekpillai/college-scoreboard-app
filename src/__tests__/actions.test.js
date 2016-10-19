@@ -1,4 +1,4 @@
-import { changeLocation, setTotal } from '../actions';
+import { changeLocation, setTotal, setSchools } from '../actions';
 
 describe('actions', function() {
   describe('changeLocation', function() {
@@ -20,6 +20,17 @@ describe('actions', function() {
     it('should pass on the location we pass in', function() {
       var total = 400;
       expect(setTotal(total).total).toEqual(total);
+    });
+  });
+
+  describe('setSchools', function() {
+    it('should have a type of "SET_SCHOOLS"', function() {
+      expect(setSchools().type).toEqual('SET_SCHOOLS');
+    });
+
+    it('should pass on the schools we pass in', function() {
+      var schools = [{ 'school.name': 'Abhis Cool School' }];
+      expect(setSchools(schools).schools).toEqual(schools);
     });
   });
 });
