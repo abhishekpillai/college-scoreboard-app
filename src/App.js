@@ -88,7 +88,7 @@ export class App extends Component {
         <div className="App-header">
           <h1>College</h1>
           <form onSubmit={this.fetchData} >
-            <label>I want to know how many colleges there are in the state of 
+            <label>I want to know how many colleges there are in the state of
               <input
                 placeholder="State, i.e. NY"
                 type="text"

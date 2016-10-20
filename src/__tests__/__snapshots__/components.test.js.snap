@@ -22,5 +22,13 @@ exports[`components <App /> renders correctly 1`] = `
     There are 
      colleges in 
   </h2>
+  <input
+    id="admissions-rate"
+    onClick={[Function anonymous]}
+    type="checkbox" />
+  <label
+    htmlFor="admissions-rate">
+    Admissions Rate
+  </label>
 </div>
 `;
