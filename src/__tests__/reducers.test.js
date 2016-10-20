@@ -5,7 +5,8 @@ describe('mainReducer', function() {
   const initialState = {
     location: '',
     total: 0,
-    schools: []
+    schools: [],
+    filters: {}
   }
 
   it('should return the initial state', function() {
@@ -34,5 +35,13 @@ describe('mainReducer', function() {
       type: 'SET_SCHOOLS',
       schools: schools
     })).toEqual(fromJS(initialState).merge({ schools: schools }));
+  });
+
+  it("should react to an action with the type 'ADD_FILTER'", function() {
+    const filter = { 'school.state': 'IL' };
+    expect(mainReducer(undefined, {
+      type: 'ADD_FILTER',
+      filter: filter
+    })).toEqual(fromJS(initialState).merge({ filters: filter }));
   });
 });
