@@ -1,4 +1,6 @@
-import { changeLocation, setTotal, setSchools } from '../actions';
+import {
+  changeLocation, setTotal, setSchools, addFilter
+} from '../actions';
 
 describe('actions', function() {
   describe('changeLocation', function() {
@@ -31,6 +33,17 @@ describe('actions', function() {
     it('should pass on the schools we pass in', function() {
       var schools = [{ 'school.name': 'Abhis Cool School' }];
       expect(setSchools(schools).schools).toEqual(schools);
+    });
+  });
+
+  describe('addFilter', function() {
+    it('should have a type of "ADD_FILTER"', function() {
+      expect(addFilter().type).toEqual('ADD_FILTER');
+    });
+
+    it('should pass on the filter we pass in', function() {
+      var filter = { 'school.state': 'IL' }
+      expect(addFilter(filter).filter).toEqual(filter);
     });
   });
 });

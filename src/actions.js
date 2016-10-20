@@ -21,6 +21,13 @@ export function setSchools(schools) {
   };
 }
 
+export function addFilter(filter) {
+  return {
+    type: 'ADD_FILTER',
+    filter: filter
+  };
+}
+
 
 export function fetchData(requestUrl) {
   return function thunk(dispatch) {
