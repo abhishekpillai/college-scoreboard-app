@@ -4,7 +4,7 @@ var initialState = fromJS({
   location: '',
   total: 0,
   schools: [],
-  filters: {}
+  fields: []
 });
 
 export default function mainReducer(state = initialState, action) {
@@ -15,9 +15,9 @@ export default function mainReducer(state = initialState, action) {
       return state.set('total', action.total);
     case 'SET_SCHOOLS':
       return state.set('schools', fromJS(action.schools));
-    case 'ADD_FILTER':
-      let existingFilters = state.get('filters');
-      return state.set('filters', existingFilters.merge(action.filter));
+    case 'ADD_FIELD':
+      let existingFields = state.get('fields');
+      return state.set('fields', existingFields.push(action.field));
     default:
       return state;
   }

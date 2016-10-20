@@ -1,5 +1,5 @@
 import {
-  changeLocation, setTotal, setSchools, addFilter
+  changeLocation, setTotal, setSchools, addField
 } from '../actions';
 
 describe('actions', function() {
@@ -36,14 +36,14 @@ describe('actions', function() {
     });
   });
 
-  describe('addFilter', function() {
-    it('should have a type of "ADD_FILTER"', function() {
-      expect(addFilter().type).toEqual('ADD_FILTER');
+  describe('addField', function() {
+    it('should have a type of "ADD_FIELD"', function() {
+      expect(addField().type).toEqual('ADD_FIELD');
     });
 
-    it('should pass on the filter we pass in', function() {
-      var filter = { 'school.state': 'IL' }
-      expect(addFilter(filter).filter).toEqual(filter);
+    it('should pass on the field we pass in', function() {
+      var field = 'id'
+      expect(addField(field).field).toEqual(field);
     });
   });
 });

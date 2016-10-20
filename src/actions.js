@@ -21,10 +21,10 @@ export function setSchools(schools) {
   };
 }
 
-export function addFilter(filter) {
+export function addField(field) {
   return {
-    type: 'ADD_FILTER',
-    filter: filter
+    type: 'ADD_FIELD',
+    field: field
   };
 }
 

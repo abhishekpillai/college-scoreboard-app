@@ -3,7 +3,11 @@ import { connect } from 'react-redux';
 import { Table, Column, Cell } from 'fixed-data-table';
 
 import './App.css';
-import { changeLocation, setTotal, fetchData } from './actions';
+import { changeLocation, setTotal, fetchData, addField } from './actions';
+
+const availFields = {
+  ADM_RATE: '2014.admissions.admission_rate.overall'
+}
 
 export class App extends Component {
   shouldComponentUpdate = (nextProps) => {
@@ -26,11 +30,13 @@ export class App extends Component {
   addAdmissionsRate = (e) => {
     let requestUrl = 'https://api.data.gov/ed/collegescorecard/v1/schools?_fields=school.name';
     if (e.target.checked) {
-      requestUrl += ',2014.admissions.admission_rate.overall';
+      requestUrl += (',' + availFields.ADM_RATE);
     }
     requestUrl += '&school.state=';
     requestUrl += this.props.redux.get('location');
     requestUrl += '&api_key=SKWPjr6q5hqkNFad7WjeRPdtq61NOH8BUs12NQ6a';
+
+    this.props.dispatch(addField(availFields.ADM_RATE));
     this.props.dispatch(fetchData(requestUrl));
   };
 
