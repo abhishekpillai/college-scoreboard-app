@@ -14,11 +14,19 @@ export class App extends Component {
     return !this.props.redux.equals(nextProps.redux);
   };
 
-  fetchData = (event) => {
-    event.preventDefault();
-    const requestUrl = 'https://api.data.gov/ed/collegescorecard/v1/schools?_fields=school.name&school.state='
+  baseRequestUrl = () => {
+    return 'https://api.data.gov/ed/collegescorecard/v1/schools?school.state='
       + this.props.redux.get('location')
       + '&api_key=SKWPjr6q5hqkNFad7WjeRPdtq61NOH8BUs12NQ6a';
+  };
+
+  appendFields = (field='') => {
+    return '&_fields=' + this.props.redux.get('fields').push(field).join(",");
+  };
+
+  fetchData = (event) => {
+    event.preventDefault();
+    const requestUrl = this.baseRequestUrl() + this.appendFields();
     this.props.dispatch(fetchData(requestUrl));
   };
 
@@ -28,14 +36,8 @@ export class App extends Component {
   };
 
   addAdmissionsRate = (e) => {
-    let requestUrl = 'https://api.data.gov/ed/collegescorecard/v1/schools?_fields=school.name';
-    if (e.target.checked) {
-      requestUrl += (',' + availFields.ADM_RATE);
-    }
-    requestUrl += '&school.state=';
-    requestUrl += this.props.redux.get('location');
-    requestUrl += '&api_key=SKWPjr6q5hqkNFad7WjeRPdtq61NOH8BUs12NQ6a';
-
+    let field = e.target.checked ? availFields.ADM_RATE : ''
+    let requestUrl = this.baseRequestUrl() + this.appendFields(field);
     this.props.dispatch(addField(availFields.ADM_RATE));
     this.props.dispatch(fetchData(requestUrl));
   };

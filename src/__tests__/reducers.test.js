@@ -6,7 +6,7 @@ describe('mainReducer', function() {
     location: '',
     total: 0,
     schools: [],
-    fields: []
+    fields: ['school.name']
   }
 
   it('should return the initial state', function() {
@@ -39,9 +39,10 @@ describe('mainReducer', function() {
 
   it("should react to an action with the type 'ADD_FIELD'", function() {
     const field = 'id';
+    initialState.fields.push(field)
     expect(mainReducer(undefined, {
       type: 'ADD_FIELD',
       field: field
-    })).toEqual(fromJS(initialState).merge({ fields: [field] }));
+    })).toEqual(fromJS(initialState).merge({ fields: initialState.fields }));
   });
 });
