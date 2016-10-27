@@ -5,16 +5,16 @@ import { Table, Column, Cell } from 'fixed-data-table';
 import './App.css';
 import { changeLocation, setTotal, fetchData, addField } from './actions';
 
-const availFields = {
-  ADM_RATE: {
+const availFields = [
+  {
     param: '2014.admissions.admission_rate.overall',
     name: 'Admission Rate'
   },
-  AVG_COST_ATTENDANCE: {
+  {
     param: '2014.cost.attendance.academic_year',
     name: 'Avg Cost of Attendance (academic year)'
   }
-}
+]
 
 export class App extends Component {
   shouldComponentUpdate = (nextProps) => {
@@ -28,7 +28,11 @@ export class App extends Component {
   };
 
   appendFields = (field='') => {
-    return '&_fields=' + this.props.redux.get('fields').push(field).join(",");
+    const fields = this.props.redux.get('fields').toArray();
+    fields.push(field);
+    console.log(fields);
+    const fieldNames = fields.map((field) => field.name);
+    return '&_fields=' + fieldNames.join(",");
   };
 
   fetchData = (event) => {
@@ -42,15 +46,8 @@ export class App extends Component {
     this.props.dispatch(setTotal(0));
   };
 
-  addAdmissionsRate = (e) => {
-    let field = e.target.checked ? availFields.ADM_RATE.param : ''
-    let requestUrl = this.baseRequestUrl() + this.appendFields(field);
-    this.props.dispatch(addField(field));
-    this.props.dispatch(fetchData(requestUrl));
-  };
-
-  addAvgCostAttendance = (e) => {
-    let field = e.target.checked ? availFields.AVG_COST_ATTENDANCE.param : ''
+  selectField = (e) => {
+    let field = e.target.checked ? e.target.data : ''
     let requestUrl = this.baseRequestUrl() + this.appendFields(field);
     this.props.dispatch(addField(field));
     this.props.dispatch(fetchData(requestUrl));
@@ -59,44 +56,43 @@ export class App extends Component {
   render() {
     let totalSchoolCount = this.props.redux.get('total'),
       location = this.props.redux.get('location'),
-      schools = this.props.redux.get('schools') || { size: 0 },
-      admissionsRateCol, avgCostAttendanceCol = null
+      schools = this.props.redux.get('schools') || { size: 0 }
       ;
 
     let total = totalSchoolCount === 0 ? null :
       (<h2>There are {totalSchoolCount} colleges in {location}</h2>);
 
-    if (document.getElementById('admissions-rate') && document.getElementById('admissions-rate').checked) {
-      admissionsRateCol = (
-        <Column
-          header={<Cell>{availFields.ADM_RATE.name}</Cell>}
-          cell={props => (
-            <Cell {...props}>
-              {
-                schools.get(props.rowIndex).get(availFields.ADM_RATE.param)
-              }
-            </Cell>
-          )}
-          width={200}
-        />
+    let selectableInputs = availFields.map((field) => {
+      const fieldId = field.name.replace(/\s/g, '');
+      return (
+        <div key={fieldId} >
+          <input
+            id={fieldId}
+            type="checkbox"
+            onClick={this.selectField}
+            data={{fieldParam: field.param}}
+          />
+          <label htmlFor={fieldId}>{field.name}</label>
+        </div>
       )
-    }
+    });
 
-    if (document.getElementById('avg-cost-attendance') && document.getElementById('avg-cost-attendance').checked) {
-      avgCostAttendanceCol = (
+    let selectedColumns = this.props.redux.get('fields').map((field) => {
+      return (
         <Column
-          header={<Cell>{availFields.AVG_COST_ATTENDANCE.name}</Cell>}
+          key={field.param}
+          header={<Cell>{field.name}</Cell>}
           cell={props => (
             <Cell {...props}>
               {
-                schools.get(props.rowIndex).get(availFields.AVG_COST_ATTENDANCE.param)
+                schools.get(props.rowIndex).get(field.param)
               }
             </Cell>
           )}
           width={200}
         />
-      )
-    }
+      );
+    });
 
     let table = schools.size === 0 ? null :
       (
@@ -117,8 +113,7 @@ export class App extends Component {
             )}
             width={200}
           />
-          {admissionsRateCol}
-          {avgCostAttendanceCol}
+          {selectedColumns}
         </Table>
       )
 
@@ -137,16 +132,7 @@ export class App extends Component {
           </form>
         </div>
         {total}
-        <input
-          id="admissions-rate"
-          type="checkbox"
-          onClick={this.addAdmissionsRate} />
-        <label htmlFor="admissions-rate">{availFields.ADM_RATE.name}</label>
-        <input
-          id="avg-cost-attendance"
-          type="checkbox"
-          onClick={this.addAvgCostAttendance} />
-        <label htmlFor="avg-cost-attendance">{availFields.AVG_COST_ATTENDANCE.name}</label>
+        {selectableInputs}
         {table}
       </div>
     );

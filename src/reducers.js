@@ -4,7 +4,7 @@ var initialState = fromJS({
   location: '',
   total: 0,
   schools: [],
-  fields: ['school.name']
+  fields: [{ param: 'school.name', name: 'Name' }]
 });
 
 export default function mainReducer(state = initialState, action) {
