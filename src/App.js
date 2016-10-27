@@ -63,7 +63,7 @@ export class App extends Component {
       admissionsRateCol, avgCostAttendanceCol = null
       ;
 
-    let answer = totalSchoolCount === 0 ? null :
+    let total = totalSchoolCount === 0 ? null :
       (<h2>There are {totalSchoolCount} colleges in {location}</h2>);
 
     if (document.getElementById('admissions-rate') && document.getElementById('admissions-rate').checked) {
@@ -136,7 +136,7 @@ export class App extends Component {
             </label>
           </form>
         </div>
-        {answer}
+        {total}
         <input
           id="admissions-rate"
           type="checkbox"

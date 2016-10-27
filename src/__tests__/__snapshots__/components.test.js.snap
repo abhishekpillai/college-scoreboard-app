@@ -28,7 +28,15 @@ exports[`components <App /> renders correctly 1`] = `
     type="checkbox" />
   <label
     htmlFor="admissions-rate">
-    Admissions Rate
+    Admission Rate
+  </label>
+  <input
+    id="avg-cost-attendance"
+    onClick={[Function anonymous]}
+    type="checkbox" />
+  <label
+    htmlFor="avg-cost-attendance">
+    Avg Cost of Attendance (academic year)
   </label>
 </div>
 `;
